@@ -1,24 +1,24 @@
 import express from 'express'
-import getDao from '../../daos/ProductosDaoFactory'
+import getDao from '../../daos/ProductosDaoFactory.js'
 const apiProducts = express.Router()
 
 apiProducts.get('/api/productos', async (req, res) => {
-    res.send(await getDao.getAll())
+    res.send(await getDao().getAll())
 })
 
 apiProducts.get('/api/productos/:id', async (req, res) => {
     let id = req.params.id
-    res.send(await getDao.getById(id))
+    res.send(await getDao().getById(id))
 })
 
 apiProducts.post('/api/productos', async (req, res) => {
     let prod = req.body
-    res.send(await getDao.save(prod))
+    res.send(await getDao().save(prod))
 })
 
-apiProducts.deleteById('/api/productos/:id', async (req, res) => {
+apiProducts.delete('/api/productos/:id', async (req, res) => {
     let id = req.params.id
-    res.send(await getDao.save(id))
+    res.send(await getDao().deleteById(id))
 })
 
 
