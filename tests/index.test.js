@@ -12,23 +12,23 @@ const urlIncorrecta = '/api/produc'
 const urlId = `/api/productos/${id}`
 const urlIdInexistente = `/api/productos/50`
 const producto1 = {
-    title: "Escuadra",
-    price: 123.45,
-    thumbnail: "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    nombre: "Escuadra",
+    precio: 123.45,
+    stock: 10,
     id: 1
 }
 
 const newProducto = {
-    title: 'Pizarra para Niños.',
-    price: 15900,
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+    nombre: 'Pizarra para Niños.',
+    precio: 15900,
+    stock: 20
 }
 
 const producto = {
     id: 8,
-    title: 'Pizarra para Niños.',
-    price: 15900,
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+    nombre: 'Pizarra para Niños.',
+    precio: 15900,
+    stock: 30
 }
 
 
@@ -75,11 +75,11 @@ describe("Test API REST", () => {
             console.log('Response Status: ', response.status)
             expect(response.status).to.eql(200);
             const producto = response.body
-            expect(producto).to.include.keys('title', 'price', 'thumbnail', 'id')
+            expect(producto).to.include.keys('nombre', 'precio', 'stock', 'id')
             expect(producto.id).to.eql(producto1.id)
-            expect(producto.title).to.eql(producto1.title)
-            expect(producto.price).to.eql(producto1.price)
-            expect(producto.thumbnail).to.eql(producto1.thumbnail)
+            expect(producto.nombre).to.eql(producto1.nombre)
+            expect(producto.precio).to.eql(producto1.precio)
+            expect(producto.stock).to.eql(producto1.stock)
         })
     })
 
@@ -116,9 +116,9 @@ describe("Test API REST", () => {
     describe(` 7- test ${url} POST`, () => {
         it('No debe incorporar un precio menor a cero.', async () => {
             let response = await request.post(url).send({
-                title: 'Pizarra para Niños.',
-                price: -15,
-                thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+                nombre: 'Pizarra para Niños.',
+                precio: -15,
+                stock: 10
             });
             console.log('Respuesta: ', response.body)
             console.log('Response Status: ', response.status)
@@ -129,9 +129,9 @@ describe("Test API REST", () => {
     describe(` 8- test ${url} POST`, () => {
         it('No debe incorporar un precio como string.', async () => {
             let response = await request.post(url).send({
-                title: 'Pizarra para Niños.',
-                price: '1500',
-                thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+                nombre: 'Pizarra para Niños.',
+                precio: '1500',
+                stock: 15
             });
             console.log('Respuesta: ', response.body)
             console.log('Response Status: ', response.status)
@@ -142,8 +142,8 @@ describe("Test API REST", () => {
     describe(` 9- test ${url} POST`, () => {
         it('No debe incorporar un campo vacío.', async () => {
             let response = await request.post(url).send({
-                title: 'Pizarra para Niños.',
-                thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+                nombre: 'Pizarra para Niños.',
+                stock: 20
             });
             console.log('Respuesta: ', response.body)
             console.log('Response Status: ', response.status)
@@ -163,9 +163,9 @@ describe("Test API REST", () => {
     describe(`11- test ${url}/${producto.id} update/PUT`, () => {
         it('No debe modificar el producto con campos con errores.', async () => {
             let response = await request.put(url + `/${producto.id}`).send({
-                title: 'Pizarra para Niños.',
-                price: -15,
-                thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-256.png'
+                nombre: 'Pizarra para Niños.',
+                precio: -15,
+                stock: 15
             });
             console.log('Respuesta: ', response.body)
             console.log('Response Status: ', response.status)
